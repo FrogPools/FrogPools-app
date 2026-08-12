@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:8CBE1B,100:B6E63A&height=190&section=header&text=FrogPools&fontColor=ffffff&fontSize=64&fontAlignY=38&desc=Marketplace%20%26%20launchpad%20for%20pools.trade%20pools&descAlignY=60&descSize=16" width="100%" alt="FrogPools" />
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:8CBE1B,100:B6E63A&height=190&section=header&text=FrogPools&fontColor=ffffff&fontSize=64&fontAlignY=38&desc=Marketplace%20and%20launchpad%20for%20pools.trade%20pools&descAlignY=60&descSize=16" width="100%" alt="FrogPools" />
 
 ![Status](https://img.shields.io/badge/status-beta-8CBE1B?style=flat-square&labelColor=10160B)
 ![Frontend](https://img.shields.io/badge/frontend-Vercel-000000?style=flat-square&logo=vercel)
