@@ -12,6 +12,7 @@
     "db:push": "prisma db push",
     "db:seed": "tsx prisma/seed.ts",
     "prisma:generate": "prisma generate",
+    "postinstall": "prisma generate",
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "prisma": { "seed": "tsx prisma/seed.ts" },
