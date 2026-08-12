@@ -35,7 +35,7 @@ export async function authRoutes(app: FastifyInstance) {
     const user = await prisma.user.findUnique({ where: { address } });
     if (!user?.nonce) return reply.code(401).send({ error: 'no active nonce — request one first' });
 
-    const result = await verifySiwe(m, body.data.signature, env.SIWE_DOMAIN, user.nonce);
+    const result = await verifySiwe(m, body.data.signature, user.nonce);
     if (!result.ok || result.address !== address) {
       return reply.code(401).send({ error: result.error ?? 'verification failed' });
     }

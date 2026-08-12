@@ -17,7 +17,31 @@ const POOLS = [
   { token: '$HOODMKT', emoji: '👑', apr: 22.1, tvl: 41000, target: 60000, vol7d: 28000, change24h: 4.1, stage: 'open' },
 ];
 
+// icon assignment lives on the backend — the API decides which avatar each pool shows.
+// Paths are relative and resolved by the frontend (images bundled in web/assets/memes/).
+const ICONS: Record<string, string> = {
+  'lilypad-weth': 'assets/memes/02-realfrog.png',
+  'swamp-weth': 'assets/memes/06-superhero.png',
+  'droplet-weth': 'assets/memes/01-droplet-poolstrade.png',
+  'flycatch-weth': 'assets/memes/08-htz.png',
+  'possum-weth': 'assets/memes/04-fox-hood.png',
+  'pegasus-weth': 'assets/memes/07-pegasus.png',
+  'goat-weth': 'assets/memes/09-goat.png',
+  'hookr-weth': 'assets/memes/05-h4-pink.png',
+  'flipflap-weth': 'assets/memes/03-froge-doge.png',
+  'unifrog-weth': 'assets/memes/02-realfrog.png',
+  'chowder-weth': 'assets/memes/06-superhero.png',
+  'hoodmkt-weth': 'assets/memes/08-htz.png',
+};
+
 const slugify = (s: string) => s.toLowerCase().replace(/\$/g, '').replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+
+// Backfill icons for existing pools whose icon is empty (runs on every boot; cheap).
+export async function ensureIcons(): Promise<void> {
+  for (const slug in ICONS) {
+    await prisma.pool.updateMany({ where: { slug, icon: '' }, data: { icon: ICONS[slug] } });
+  }
+}
 const rnd = (seed: number) => { const x = Math.sin(seed) * 10000; return x - Math.floor(x); };
 const ADDRS = ['0x..f495', '0x..3e7d', '0x..f9f9', '0x..a1c8', '0x..77e2', '0x..60af', '0x..7a09', '0x..5786', '0x..70f4', '0x..1999'];
 const VERBS = ['staked', 'compounded', 'claimed', 'staked', 'unstaked'];
@@ -27,9 +51,10 @@ export async function ensureSeed(): Promise<void> {
   if (count > 0) return;
   for (const p of POOLS) {
     const pair = `${p.token} / WETH`;
+    const slug = slugify(pair);
     const pool = await prisma.pool.create({
       data: {
-        slug: slugify(pair), token: p.token, pair, emoji: p.emoji,
+        slug, token: p.token, pair, emoji: p.emoji, icon: ICONS[slug] || '',
         apr: p.apr, tvl: p.tvl, target: p.target, vol7d: p.vol7d, change24h: p.change24h,
         stage: p.stage, trending: !!(p as any).trending, isNew: !!(p as any).isNew, verified: true, feeTier: 0.3,
       },

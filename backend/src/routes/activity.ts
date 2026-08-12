@@ -20,7 +20,7 @@ export async function activityRoutes(app: FastifyInstance) {
       where: { ...verbFilter, ...poolFilter },
       orderBy: { createdAt: 'desc' },
       take: p.limit,
-      include: { pool: { select: { pair: true, emoji: true, slug: true } } },
+      include: { pool: { select: { pair: true, emoji: true, slug: true, icon: true } } },
     });
     return { items };
   });

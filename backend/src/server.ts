@@ -2,7 +2,7 @@ import Fastify from 'fastify';
 import cors from '@fastify/cors';
 import rateLimit from '@fastify/rate-limit';
 import { env } from './env.js';
-import { ensureSeed } from './lib/bootstrap.js';
+import { ensureSeed, ensureIcons } from './lib/bootstrap.js';
 import { registerAuth } from './plugins/authenticate.js';
 import { healthRoutes } from './routes/health.js';
 import { authRoutes } from './routes/auth.js';
@@ -35,6 +35,7 @@ async function main() {
   // seed demo pools on first boot if the DB is empty (safe to call every start)
   try {
     await ensureSeed();
+    await ensureIcons();
   } catch (e) {
     app.log.warn({ err: e }, 'ensureSeed skipped');
   }

@@ -25,6 +25,7 @@ model Pool {
   token     String // e.g. "$LILYPAD"
   pair      String // e.g. "$LILYPAD / WETH"
   emoji     String     @default("🐸")
+  icon      String     @default("") // avatar image path/URL served to the frontend
   feeTier   Float      @default(0.3) // percent
   apr       Float      @default(0) // percent, fees-only
   tvl       Float      @default(0) // usd
