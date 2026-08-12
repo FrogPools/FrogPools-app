@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FrogPools — Collections</title>
+<meta name="description" content="All pools.trade liquidity pools on FrogPools — stake into any pool and earn its swap fees.">
+<meta name="theme-color" content="#8CBE1B">
+<link rel="icon" type="image/png" href="assets/frog-64.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="app.css">
+</head>
+<body data-page="collections">
+<div id="nav-mount"></div>
+
+<div class="wrap pagetitle">
+  <h1>Collections</h1>
+  <p>Every pools.trade pool, in one place. Stake into any pool for a share of its swap fees — the router keeps deepening it.</p>
+</div>
+
+<main class="wrap">
+  <div class="shead" style="margin-top:24px">
+    <div class="seg"><span class="on">All</span><span>Open</span><span>Trending</span><span>New</span></div>
+    <div class="seg"><span class="on">Top APR</span><span>TVL</span><span>24h fees</span></div>
+  </div>
+  <div class="grid" id="grid"></div>
+  <div class="pag"><a href="#">←</a><a class="on" href="#">1</a><a href="#">2</a><a href="#">3</a><a href="#">4</a><a href="#">5</a><a href="#">→</a></div>
+</main>
+
+<div id="foot-mount"></div>
+<script src="app-shell.js"></script>
+<script>
+(function(){
+  var pools=[
+    ['🪷','$LILYPAD / WETH','g1','APR 42.6% · fees live'],
+    ['💧','$SWAMP / WETH','g2','APR 61.2% · router on'],
+    ['🐸','$DROPLET / WETH','g3','APR 28.4% · deepening'],
+    ['🐝','$FLYCATCH / WETH','g4','APR 88.1% · high-fee'],
+    ['🐖','$POSSUM / WETH','g2','APR 54.7% · fresh pool'],
+    ['🦄','$PEGASUS / WETH','g3','APR 33.8% · compounding'],
+    ['🐐','$GOAT / WETH','g1','APR 47.3% · every 6h'],
+    ['🍲','$CHOWDER / WETH','g4','APR 39.1% · new this week'],
+    ['🔥','$HOOKR / WETH','g3','APR 72.4% · trending'],
+    ['🐕','$FLIPFLAP / WETH','g1','APR 31.0% · fees live'],
+    ['🐸','$UNIFROG / WETH','g2','APR 44.8% · community'],
+    ['👑','$HOODMKT / WETH','g4','APR 22.1% · blue-chip']
+  ];
+  var g=document.getElementById('grid');
+  var artg={g1:'artg1',g2:'artg2',g3:'artg3',g4:'artg4'};
+  if(g){g.innerHTML=pools.map(function(p){
+    return '<a class="gcard" href="launch.html"><div class="gb '+artg[p[2]]+'">'+p[0]+'</div><div class="gbody"><span class="gav">'+p[0]+'</span><span class="gnm"><b>'+p[1]+'<svg class="verified"><use href="#chk"/></svg></b><small>'+p[3]+'</small></span></div></a>';
+  }).join('');}
+})();
+</script>
+</body>
+</html>

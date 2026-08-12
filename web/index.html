@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FrogPools — the marketplace &amp; launchpad for pools.trade pools</title>
+<meta name="description" content="FrogPools is the fast marketplace and launchpad for pools.trade — discover trending pools, stake for real swap fees in WETH, trade, or launch your own. Self-custodial, on Robinhood Chain.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" type="image/png" href="assets/frog-64.png">
+<meta property="og:title" content="FrogPools — the marketplace &amp; launchpad for pools.trade pools">
+<meta property="og:description" content="Discover, stake, trade and launch pools.trade pools — real fees, self-custodial, on Robinhood Chain.">
+<meta property="og:image" content="assets/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green:#8CBE1B; --green-2:#7BAA12; --green-ink:#3A5310;
+  --green-tint:#F1F7E4; --green-tint-2:#E6F1D2;
+  --ink:#10160B; --ink-2:#5A6550;
+  --line:#E7ECE0; --line-2:#D8E0CC;
+  --bg:#FFFFFF; --bg-soft:#FAFCF6; --card:#FFFFFF;
+  --mono:'Space Mono',ui-monospace,monospace; --disp:'Space Grotesk','Inter',sans-serif;
+  --r:14px; --maxw:1240px;
+  --shadow:0 24px 60px -30px rgba(40,60,10,.4); --shadow-sm:0 12px 34px -20px rgba(40,60,10,.4);
+  --red:#E5484D; --amber:#E8A33D;
+}
+body.theme-green{
+  --green:#FFFFFF; --green-2:#FFFFFF; --green-ink:#FFFFFF;
+  --green-tint:rgba(255,255,255,.16); --green-tint-2:rgba(255,255,255,.26);
+  --ink:#FFFFFF; --ink-2:rgba(255,255,255,.78);
+  --line:rgba(255,255,255,.22); --line-2:rgba(255,255,255,.34);
+  --bg:#8CBE1B; --bg-soft:#83B417; --card:rgba(255,255,255,.12);
+  --shadow:0 24px 60px -30px rgba(0,0,0,.45); --shadow-sm:0 12px 34px -20px rgba(0,0,0,.4);
+}
+body.theme-green .btn-primary{color:#0e1806}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;color:var(--ink);background:var(--bg);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden;transition:background .5s ease,color .5s ease}
+h1,h2,h3,.display{font-family:var(--disp);letter-spacing:-.02em;line-height:1.04;font-weight:700}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 26px}
+.eyebrow{font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--green-2)}
+.btn{display:inline-flex;align-items:center;font-family:var(--mono);font-weight:700;font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;cursor:pointer;border:1px solid transparent;transition:transform .18s cubic-bezier(.16,1,.3,1),box-shadow .25s,background .2s,border-color .2s,color .2s}
+.btn .lbl{display:flex;align-items:center;padding:14px 24px}
+.btn .arw{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:rgba(14,24,6,.1);margin:0 6px 0 -6px}
+.btn .arw svg{width:15px;height:15px;stroke-width:2.4}
+.btn-primary{background:var(--green);color:#0e1806;box-shadow:0 14px 30px -14px rgba(140,190,27,.95),inset 0 1px 0 rgba(255,255,255,.35)}
+.btn-primary:hover{transform:translateY(-2px);background:var(--green-2);box-shadow:0 20px 40px -16px rgba(140,190,27,1),inset 0 1px 0 rgba(255,255,255,.35)}
+.btn-primary .arw{background:rgba(14,24,6,.16)}
+.btn-ghost{background:var(--card);color:var(--ink);border-color:var(--line-2)}
+.btn-ghost .arw{background:transparent}
+.btn-ghost:hover{border-color:var(--green);color:var(--green-2);transform:translateY(-2px)}
+body.theme-green .btn-ghost{background:rgba(255,255,255,.1)}
+.nav-icon{width:44px;height:44px;border-radius:50%;border:1px solid var(--line-2);background:var(--card);display:grid;place-items:center;color:var(--ink);transition:transform .2s cubic-bezier(.16,1,.3,1),border-color .2s,background .2s;flex:none}
+.nav-icon svg{width:17px;height:17px;fill:currentColor}
+.nav-icon:hover{border-color:var(--green);transform:translateY(-2px)}
+body.theme-green .nav-icon{background:rgba(255,255,255,.1)}
+svg{stroke-linecap:round;stroke-linejoin:round}
+.reveal{opacity:0;transform:translateY(30px) scale(.985);filter:blur(9px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1),filter .7s ease;transition-delay:var(--d,0s)}
+.reveal.in{opacity:1;transform:none;filter:blur(0)}
+.scrollprog{position:fixed;top:0;left:0;height:3px;width:100%;z-index:60;pointer-events:none}
+.scrollprog i{display:block;height:100%;width:0;background:linear-gradient(90deg,#8CBE1B,#B6E63A);box-shadow:0 0 14px rgba(140,190,27,.75)}
+@media (prefers-reduced-motion: reduce){.reveal{transition:none!important;filter:none!important;transform:none!important;opacity:1!important}}
+#page{position:relative;z-index:1;background:var(--bg)}
+.frogmask{-webkit-mask:url(assets/frog.png) center/contain no-repeat;mask:url(assets/frog.png) center/contain no-repeat}
+
+/* NAV — white glass by default, flips to green over green sections */
+.nav{position:sticky;top:0;z-index:50;background-color:rgba(255,255,255,.92);background-image:linear-gradient(180deg,rgba(255,255,255,.32),rgba(255,255,255,0) 74%);backdrop-filter:blur(18px) saturate(1.25);-webkit-backdrop-filter:blur(18px) saturate(1.25);border-bottom:1px solid transparent;transition:background-color .55s cubic-bezier(.16,1,.3,1),border-color .55s ease,box-shadow .45s ease}
+.nav.scrolled{border-bottom-color:rgba(16,22,11,.06)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:70px}
+.brand{display:flex;align-items:center;gap:9px;font-family:var(--disp);font-weight:700;font-size:21px}
+.brand .fm{width:30px;height:30px;background:#7BAA12;flex:none;transition:background .5s ease}
+.brand .nm{letter-spacing:-.03em;color:#10160B;transition:color .5s ease}
+.beta{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#7BAA12;border:1px solid rgba(16,22,11,.18);border-radius:6px;padding:3px 7px;margin-left:2px;transition:color .5s,border-color .5s}
+.nav-links{display:flex;align-items:center;gap:16px;font-family:var(--mono);text-transform:uppercase;font-size:12px;letter-spacing:.08em}
+.nav-links a{color:#5A6550;transition:color .3s}.nav-links a:hover{color:#7BAA12}
+.nav-links .sep{color:rgba(16,22,11,.2);transition:color .5s}
+.nav-cta{display:flex;align-items:center;gap:12px}
+.nav .nav-icon{background:#fff;border-color:rgba(16,22,11,.14);color:#10160B}
+.nav .btn-ghost{background:#fff;color:#10160B;border-color:rgba(16,22,11,.16)}
+.nav .btn-primary{background:#8CBE1B;color:#0e1806}
+.nav .btn-primary .arw{background:rgba(14,24,6,.16)}
+/* GREEN state */
+.nav.nav-green{background-color:rgba(140,190,27,.92);border-bottom-color:rgba(255,255,255,.22);box-shadow:0 14px 40px -26px rgba(20,40,6,.55)}
+.nav.nav-green .brand .fm{background:#fff}
+.nav.nav-green .brand .nm{color:#fff}
+.nav.nav-green .beta{color:#fff;border-color:rgba(255,255,255,.42)}
+.nav.nav-green .nav-links a{color:rgba(255,255,255,.82)}
+.nav.nav-green .nav-links a:hover{color:#fff}
+.nav.nav-green .nav-links .sep{color:rgba(255,255,255,.35)}
+.nav.nav-green .nav-icon{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.32);color:#fff}
+.nav.nav-green .btn-ghost{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.36)}
+.nav.nav-green .btn-primary{background:#fff;color:#0e1806}
+.nav.nav-green .btn-primary .arw{background:rgba(14,24,6,.14)}
+@media(max-width:900px){.nav-links{display:none}.nav-cta .btn-ghost{display:none}}
+
+/* HERO */
+.hero{position:relative;min-height:92vh;display:flex;flex-direction:column;justify-content:center;overflow:hidden;isolation:isolate}
+.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+.hero-fade{position:absolute;left:0;right:0;bottom:0;height:24%;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,0),var(--bg) 92%)}
+.hero-inner{text-align:center;position:relative;z-index:2}
+.hero-scrim{position:absolute;inset:0;z-index:0;pointer-events:none;background:linear-gradient(180deg,rgba(8,16,4,.10),rgba(8,16,4,.34) 46%,rgba(8,16,4,.18)),radial-gradient(48% 42% at 50% 46%,rgba(8,16,4,.42),transparent 72%)}
+.hero-slides{position:relative;height:2.5em;width:min(94vw,1000px);margin:0 auto}
+.hero-slide{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-family:var(--disp);font-weight:700;font-size:clamp(2.1rem,5vw,4rem);letter-spacing:-.03em;line-height:1.05;color:#fff;text-shadow:0 6px 44px rgba(0,0,0,.4);opacity:0;visibility:hidden;transform:translateY(22px) scale(.98);transition:opacity .75s cubic-bezier(.16,1,.3,1),transform .75s cubic-bezier(.16,1,.3,1),visibility .75s}
+.hero-slide.on{opacity:1;visibility:visible;transform:none}
+.hero-slide .ln{white-space:nowrap;display:block}
+.hero-slide .g{color:#B6E63A}
+.hero-corners{position:absolute;left:0;right:0;bottom:0;z-index:3;padding:0 40px 34px;display:flex;justify-content:space-between;align-items:flex-end;gap:20px;pointer-events:none}
+.ai-note{max-width:34ch;text-align:left}
+.ai-note .k{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#C7F04A;margin-bottom:8px}
+.ai-note p{font-size:13px;line-height:1.5;color:rgba(255,255,255,.92);font-weight:500;text-shadow:0 2px 16px rgba(0,0,0,.4)}
+.scrolldisc{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.9);text-shadow:0 2px 16px rgba(0,0,0,.4);display:flex;align-items:center;gap:8px;white-space:nowrap}
+.scrolldisc .arr{display:inline-block;animation:bob 1.8s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+@media(max-width:720px){.hero-corners{padding:0 22px 24px}.scrolldisc{display:none}.ai-note{max-width:26ch}}
+
+/* SECTIONS */
+section{padding:104px 0}
+.sec-head{max-width:60ch}.sec-head.ctr{margin:0 auto;text-align:center}
+.sec-head h2{font-size:clamp(1.9rem,4vw,3rem);margin-top:14px}
+.sec-head p{margin-top:16px;color:var(--ink-2);font-size:1.08rem}
+
+/* TERMINAL — apple/mac style, light */
+/* VIDEO FRAME — product demo (clean 16:9) */
+.vid-sec{padding:104px 0}
+.vidframe{max-width:1180px;margin:56px auto 0;border-radius:24px;overflow:hidden;background:#0E1206;box-shadow:0 50px 120px -50px rgba(20,40,6,.55),0 0 0 1px rgba(20,40,6,.1);transition:box-shadow .5s,transform .5s cubic-bezier(.16,1,.3,1)}
+.vidframe:hover{box-shadow:0 60px 140px -46px rgba(20,40,6,.62),0 0 0 1px rgba(20,40,6,.14);transform:translateY(-4px)}
+.vf-screen{position:relative;aspect-ratio:16/9;background:radial-gradient(120% 120% at 50% 0%,#12200a,#0A0E05);display:grid;place-items:center;overflow:hidden}
+.vf-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.vf-ph{position:relative;z-index:2;text-align:center;padding:30px;pointer-events:none}
+.vf-ph .play{width:78px;height:78px;margin:0 auto 22px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.28);backdrop-filter:blur(6px);display:grid;place-items:center;box-shadow:0 20px 60px -20px rgba(0,0,0,.6)}
+.vf-ph .play::after{content:"";width:0;height:0;border-style:solid;border-width:13px 0 13px 22px;border-color:transparent transparent transparent #fff;margin-left:5px}
+.vf-ph .pl-lbl{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.62)}
+.vf-ph .pl-sub{font-family:var(--disp);font-weight:600;font-size:1.35rem;color:#fff;margin-top:10px}
+.vf-glow{position:absolute;inset:auto 0 -40% 0;height:70%;background:radial-gradient(60% 100% at 50% 100%,rgba(140,190,27,.28),transparent 70%);z-index:1;pointer-events:none}
+.vf-cap{text-align:center;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);margin-top:24px}
+
+/* HOW IT WORKS — layer style */
+.hiw-intro{display:grid;gap:26px;align-items:end;margin-bottom:78px}
+@media(min-width:900px){.hiw-intro{grid-template-columns:1.15fr 1fr;gap:60px}}
+.hiw-intro h2{font-size:clamp(2.2rem,5vw,3.6rem)}
+.hiw-intro p{color:var(--ink-2);font-size:1.06rem}
+.steps{display:grid;gap:22px;grid-template-columns:1fr}
+@media(min-width:860px){.steps{grid-template-columns:repeat(3,1fr);align-items:stretch}}
+.step{position:relative;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:38px;min-height:460px;display:flex;flex-direction:column;transition:border-color .2s,box-shadow .3s;will-change:transform}
+.step:hover{border-color:var(--line-2);box-shadow:var(--shadow-sm)}
+.step .num{font-family:var(--mono);font-size:13px;color:var(--green-2);letter-spacing:.14em}
+.step .art{flex:1;display:grid;place-items:center;margin:14px 0}
+.step .frog{width:150px;height:150px;background:var(--ink);opacity:.9;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;-webkit-mask-size:contain;mask-size:contain;transition:transform .35s}
+.step:hover .frog{transform:scale(1.06) translateY(-4px)}
+.step h3{font-size:1.5rem}.step p{margin-top:8px;color:var(--ink-2);font-size:.96rem}
+.step .tick{position:absolute;width:14px;height:14px;border-color:var(--line-2);border-style:solid;border-width:0}
+.step .tick.tl{top:14px;left:14px;border-top-width:2px;border-left-width:2px}
+.step .tick.tr{top:14px;right:14px;border-top-width:2px;border-right-width:2px}
+.step .tick.bl{bottom:14px;left:14px;border-bottom-width:2px;border-left-width:2px}
+.step .tick.br{bottom:14px;right:14px;border-bottom-width:2px;border-right-width:2px}
+.step:hover .tick{border-color:var(--green)}
+.step .art{align-items:stretch}
+.stepvid{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:radial-gradient(120% 120% at 50% 0%,#12200a,#0A0E05);box-shadow:0 22px 54px -30px rgba(20,40,6,.55),inset 0 0 0 1px rgba(255,255,255,.06);transition:transform .35s cubic-bezier(.16,1,.3,1)}
+.step:hover .stepvid{transform:translateY(-3px)}
+.stepvid video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.sv-glow{position:absolute;inset:auto 0 -34% 0;height:64%;background:radial-gradient(60% 100% at 50% 100%,rgba(140,190,27,.3),transparent 70%);z-index:1;pointer-events:none}
+.sv-ph{position:absolute;inset:0;display:grid;place-items:center;z-index:2;pointer-events:none;transition:opacity .3s}
+.sv-ph .play{width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.32);backdrop-filter:blur(4px);display:grid;place-items:center;box-shadow:0 12px 34px -14px rgba(0,0,0,.6)}
+.sv-ph .play::after{content:"";width:0;height:0;border-style:solid;border-width:8px 0 8px 13px;border-color:transparent transparent transparent #fff;margin-left:3px}
+.sv-cap{position:absolute;left:0;right:0;bottom:10px;z-index:2;text-align:center;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+
+/* ECOSYSTEM */
+.eco{display:grid;gap:44px}
+@media(min-width:960px){.eco{grid-template-columns:.8fr 1.7fr;gap:64px;align-items:center}}
+.eco-head h2{font-size:clamp(2.1rem,4.4vw,3.4rem);margin-top:16px}
+.eco-head p{margin-top:16px;color:var(--ink-2);font-size:1.05rem}
+.eco-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+@media(min-width:720px){.eco-grid{grid-template-columns:repeat(4,1fr)}}
+.eco-cell{position:relative;background:var(--card);display:grid;place-items:center;padding:44px 22px;min-height:210px;transition:background .35s ease,box-shadow .35s ease;overflow:hidden}
+.eco-cell::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 120%,var(--bc,transparent),transparent 68%);opacity:0;transition:opacity .4s ease}
+.eco-cell:hover{background:#fff;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--bc,#8CBE1B) 40%,transparent)}
+.eco-cell:hover::before{opacity:.12}
+.eco-logo{position:relative;z-index:1;width:100%;max-width:150px;height:52px;background:var(--ink);opacity:.5;-webkit-mask-position:center;mask-position:center;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-size:contain;mask-size:contain;transition:background .35s ease,opacity .35s ease,transform .35s cubic-bezier(.16,1,.3,1)}
+.eco-cell:hover .eco-logo{background:var(--bc,var(--green-2));opacity:1;transform:translateY(-3px) scale(1.04)}
+
+/* POOLS — white Apple launchpad + circular orbit animation */
+.launch{margin-top:52px;background:#fff;border-radius:32px;padding:36px;display:grid;gap:34px;box-shadow:0 60px 130px -55px rgba(20,40,6,.55),inset 0 2px 0 rgba(255,255,255,.7),0 0 0 1px rgba(16,22,11,.05)}
+@media(min-width:920px){.launch{grid-template-columns:.92fr 1.08fr;gap:52px;align-items:center;padding:48px}}
+.orbit{position:relative;width:min(370px,82vw);aspect-ratio:1;margin:0 auto}
+.orbit .ring{position:absolute;inset:9%;border-radius:50%;border:1px dashed rgba(123,170,18,.32)}
+.orbit .ring.r2{inset:24%;border-color:rgba(123,170,18,.2)}
+.orbit .sweep{position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg,transparent 0 68%,rgba(140,190,27,.4) 86%,transparent 100%);-webkit-mask:radial-gradient(circle,transparent 55%,#000 56%);mask:radial-gradient(circle,transparent 55%,#000 56%);animation:spin 6s linear infinite}
+.orbit .core{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:96px;height:96px;border-radius:50%;background:radial-gradient(circle at 40% 34%,#9BD22B,#6f9c10);display:grid;place-items:center;box-shadow:0 24px 48px -18px rgba(123,170,18,.95),inset 0 2px 7px rgba(255,255,255,.45);z-index:3}
+.orbit .core .fm{width:56px;height:56px;background:#fff}
+.orbit .sat{position:absolute;inset:0;animation:spin linear infinite;animation-duration:var(--t,20s)}
+.orbit .sat b{position:absolute;top:1.5%;left:50%;width:48px;height:48px;border-radius:50%;background:#fff;box-shadow:0 14px 30px -12px rgba(20,40,6,.5),0 0 0 1px rgba(16,22,11,.06);display:grid;place-items:center;font-size:21px;transform:translate(-50%,-50%);animation:spin-rev linear infinite;animation-duration:var(--t,20s)}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes spin-rev{to{transform:translate(-50%,-50%) rotate(-360deg)}}
+.launch-list{display:flex;flex-direction:column;gap:12px}
+.launch-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.launch-head .lh-t{font-family:var(--disp);font-weight:700;font-size:1.2rem;color:#10160B}
+.launch-live{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:#5A6550}
+.launch-live .d{width:8px;height:8px;border-radius:50%;background:#38C24B;animation:lpulse 1.9s infinite}
+@keyframes lpulse{0%{box-shadow:0 0 0 0 rgba(56,194,75,.5)}70%{box-shadow:0 0 0 9px rgba(56,194,75,0)}100%{box-shadow:0 0 0 0 rgba(56,194,75,0)}}
+.pool-bub{display:grid;grid-template-columns:auto 1fr auto auto;gap:14px;align-items:center;background:#F5F8EF;border:1px solid rgba(16,22,11,.06);border-radius:20px;padding:12px 14px;transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s,background .3s}
+.pool-bub:hover{transform:translateY(-2px);background:#fff;box-shadow:0 24px 50px -28px rgba(20,40,6,.42)}
+.pool-bub .pav{width:46px;height:46px;border-radius:50%;background:conic-gradient(from 130deg,#DCEBBA,#B6E63A,#9BD22B,#DCEBBA);display:grid;place-items:center;font-size:21px;flex:none;box-shadow:inset 0 0 0 2px #fff}
+.pool-bub .pnm b{font-family:var(--disp);font-weight:600;color:#10160B;font-size:.98rem;display:block}
+.pool-bub .pnm small{color:#6a7360;font-size:12px}
+.pool-apr{text-align:right}
+.pool-apr b{font-family:var(--mono);font-weight:700;color:#5E8C0E;font-size:1.02rem;display:block}
+.pool-apr small{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#93997f}
+.pool-stake{font-family:var(--mono);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.05em;padding:12px 19px;border-radius:999px;background:#10160B;color:#fff;transition:transform .18s cubic-bezier(.16,1,.3,1),background .2s}
+.pool-stake:hover{transform:translateY(-2px);background:#7BAA12}
+@media(max-width:560px){.pool-bub{grid-template-columns:auto 1fr auto}.pool-apr{display:none}}
+
+/* COMMUNITY — sticky centre + flowing side columns (layer) */
+.community{position:relative;min-height:220vh}
+.cmy-track{position:sticky;top:0;height:100vh;overflow:hidden;display:grid;place-items:center;isolation:isolate}
+.cmy-bg{position:absolute;inset:-12%;z-index:0;pointer-events:none;will-change:transform;background:
+  radial-gradient(38% 48% at 20% 32%,rgba(255,255,255,.16),transparent 60%),
+  radial-gradient(38% 48% at 82% 68%,rgba(255,255,255,.18),transparent 60%)}
+.cmy-col{position:absolute;top:0;height:100%;display:flex;flex-direction:column;gap:18px;justify-content:center;z-index:1;will-change:transform;pointer-events:none}
+.cmy-col.l{left:clamp(12px,4vw,90px)}.cmy-col.r{right:clamp(12px,4vw,90px)}
+.cmy-inner{position:relative;z-index:3;max-width:52ch;margin:0 auto;text-align:center;padding:0 20px}
+.cmy-inner h2{font-size:clamp(2.4rem,5.6vw,4.6rem);margin-top:18px}
+.cmy-inner p{margin-top:18px;color:var(--ink-2);font-size:1.08rem}
+.cmy-inner .hero-cta{display:flex;gap:13px;justify-content:center;flex-wrap:wrap;margin-top:30px}
+.mini{background:rgba(255,255,255,.95);border:1px solid rgba(20,30,10,.06);border-radius:14px;padding:11px 14px;display:flex;align-items:center;gap:11px;width:256px;box-shadow:0 18px 40px -22px rgba(0,0,0,.5)}
+.mini .av{width:42px;height:42px;border-radius:11px;display:grid;place-items:center;font-size:20px;background:#EEF6DD;flex:none}
+.mini .in{min-width:0}
+.mini .in b{font-family:var(--disp);display:block;font-size:14px;color:#12180b;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:120px}
+.mini .in small{color:#6b7560;font-size:11px;font-family:var(--mono)}
+.mini .chg{margin-left:auto;font-family:var(--mono);font-weight:700;font-size:12px;white-space:nowrap}
+.mini .chg.up{color:#3a9d0c}.mini .chg.down{color:#d23b3f}
+@media(max-width:1100px){.cmy-col{display:none}.community{min-height:auto;padding:150px 0}.cmy-track{position:static;height:auto;padding:40px 0}}
+
+/* FOOTER — minimal, theme-aware */
+/* WHY — reuses the .step card style from How it works */
+#why .sec-head{margin-bottom:64px}
+#why .step .art{margin:6px 0}
+.whyfrog{width:100%;max-width:230px;height:230px;object-fit:contain;filter:drop-shadow(0 16px 30px rgba(20,40,6,.25));transition:transform .4s cubic-bezier(.16,1,.3,1)}
+#why .step:hover .whyfrog{transform:scale(1.06) translateY(-5px)}
+@media(max-width:860px){.whyfrog{height:200px}}
+/* pools stake */
+.bigfoot{position:fixed;left:0;bottom:0;width:100%;min-height:100vh;z-index:0;display:flex;background:#8CBE1B;color:#101a06;padding:0;overflow:hidden;transition:background .5s,color .5s;--ffrog:#fff;--fmut:#25370f;--fwm2:#fff}
+.bigfoot>.wrap{width:100%;display:flex;flex-direction:column;justify-content:space-between;padding-top:clamp(90px,14vh,150px);padding-bottom:46px}
+body.theme-green .bigfoot{background:#fff;color:#3A5310;--ffrog:#8CBE1B;--fmut:#6f8f3a;--fwm2:#8CBE1B}
+.bf-top{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap}
+.bf-head{font-size:clamp(2.4rem,5.5vw,4.4rem);line-height:1;max-width:14ch;color:inherit;letter-spacing:-.03em}
+.bf-links{display:grid;grid-template-columns:1fr 1fr;gap:8px 44px;font-family:var(--mono);font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;align-content:start}
+.bf-links a{color:inherit;opacity:.82;padding:4px 0;transition:.2s}.bf-links a:hover{opacity:1;transform:translateX(3px)}
+.bf-bottom{margin-top:auto;padding-top:60px;display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+.bf-name{display:flex;align-items:center;gap:12px}
+.bf-name .fm{width:clamp(38px,5vw,60px);height:clamp(38px,5vw,60px);background:var(--ffrog);flex:none}
+.bf-name .wm{font-family:var(--disp);font-weight:700;font-size:clamp(2rem,5vw,3.2rem);line-height:.9;letter-spacing:-.03em;color:inherit}
+.bf-legal{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--fmut);text-align:right}
+.bf-legal a{color:inherit}
+.bf-disc{margin-top:18px;font-size:10.5px;line-height:1.5;color:var(--fmut);max-width:80ch;opacity:.8}
+</style>
+</head>
+<body class="theme-green">
+<div class="scrollprog"><i></i></div>
+
+<div id="page">
+
+<!-- NAV -->
+<nav class="nav"><div class="wrap nav-in">
+  <a class="brand" href="#top"><span class="fm frogmask"></span><span class="nm">FrogPools</span><span class="beta">Beta</span></a>
+  <div class="nav-links">
+    <a href="#terminal">Live yield</a><span class="sep">//</span>
+    <a href="#how">How it works</a><span class="sep">//</span>
+    <a href="#ecosystem">Ecosystem</a><span class="sep">//</span>
+    <a href="#pools">Pools</a>
+  </div>
+  <div class="nav-cta">
+    <a class="nav-icon" href="https://x.com/" target="_blank" rel="noopener" aria-label="Follow on X"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+    <a class="btn btn-ghost" href="#"><span class="lbl">Docs</span></a>
+    <a class="btn btn-primary" href="app.html"><span class="lbl">Launch App</span><span class="arw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+  </div>
+</div></nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <video class="hero-video" muted loop playsinline preload="auto" poster="assets/hero-poster.jpg" data-lazyvideo>
+    <source src="assets/hero.mp4" type="video/mp4">
+  </video>
+  <div class="hero-scrim"></div>
+  <div class="hero-fade"></div>
+  <div class="hero-inner wrap">
+    <div class="hero-slides" id="heroSlides">
+      <div class="hero-slide on"><span class="ln">The marketplace for</span><span class="ln"><span class="g">pools.trade</span></span></div>
+      <div class="hero-slide"><span class="ln">Discover, stake &amp;</span><span class="ln">trade <span class="g">every pool</span></span></div>
+      <div class="hero-slide"><span class="ln"><span class="g">Launch</span> a pool</span><span class="ln">in minutes</span></div>
+    </div>
+  </div>
+  <div class="hero-corners">
+    <div class="ai-note">
+      <div class="k">// FrogPools</div>
+      <p>The fast marketplace and launchpad for pools.trade pools. Discover trending pools, stake for real WETH fees, trade, or launch your own — self-custodial, on Robinhood Chain.</p>
+    </div>
+    <div class="scrolldisc">Scroll to discover <span class="arr">↓</span></div>
+  </div>
+</header>
+
+<!-- VIDEO FRAME — product demo -->
+<section class="vid-sec" id="demo"><div class="wrap">
+  <div class="sec-head ctr reveal">
+    <span class="eyebrow">// The app</span>
+    <h2>Every pool, in one place.</h2>
+    <p>Browse trending and new pools, watch live stakes and trades, and launch in a couple of clicks — see the marketplace live below.</p>
+  </div>
+  <div class="vidframe reveal">
+    <div class="vf-screen">
+      <video class="vf-video" poster="assets/demo-poster.jpg" muted loop playsinline preload="none" data-lazyvideo>
+        <source src="assets/demo.mp4" type="video/mp4">
+      </video>
+      <div class="vf-glow"></div>
+      <div class="vf-ph">
+        <div class="play"></div>
+        <div class="pl-lbl">Product demo</div>
+        <div class="pl-sub">Recording drops in here</div>
+      </div>
+    </div>
+  </div>
+  <div class="vf-cap">Recorded in-app · discover → stake → launch</div>
+</div></section>
+
+<!-- HOW IT WORKS -->
+<section id="how"><div class="wrap">
+  <div class="hiw-intro">
+    <div class="reveal"><span class="eyebrow">// How it works</span>
+      <h2>Browse. Stake. Launch.</h2></div>
+    <div class="reveal"><p>FrogPools is the marketplace and launchpad for pools.trade. Discover every pool in one place, stake for a real share of swap fees, or launch your own — and the router keeps each pool getting deeper on its own.</p></div>
+  </div>
+  <div class="steps" id="steps">
+    <div class="step"><span class="tick tl"></span><span class="tick tr"></span><span class="tick bl"></span><span class="tick br"></span>
+      <div class="num">[ 01 ]</div>
+      <div class="art"><div class="stepvid"><video poster="assets/how-poster.jpg" muted loop playsinline preload="none" data-lazyvideo><source src="assets/how-1.mp4" type="video/mp4"></video><div class="sv-glow"></div><div class="sv-ph"><span class="play"></span></div><div class="sv-cap">browse</div></div></div>
+      <h3>Discover pools</h3><p>Browse the whole pools.trade market — trending, new and top-APR pools, with live floor, fees and volume. Find your pool in seconds.</p></div>
+    <div class="step"><span class="tick tl"></span><span class="tick tr"></span><span class="tick bl"></span><span class="tick br"></span>
+      <div class="num">[ 02 ]</div>
+      <div class="art"><div class="stepvid"><video poster="assets/how-poster.jpg" muted loop playsinline preload="none" data-lazyvideo><source src="assets/how-2.mp4" type="video/mp4"></video><div class="sv-glow"></div><div class="sv-ph"><span class="play"></span></div><div class="sv-cap">stake</div></div></div>
+      <h3>Stake &amp; trade</h3><p>Stake into any pool for a share of its swap fees in WETH, or trade in and out. Fully self-custodial — claim or exit anytime.</p></div>
+    <div class="step"><span class="tick tl"></span><span class="tick tr"></span><span class="tick bl"></span><span class="tick br"></span>
+      <div class="num">[ 03 ]</div>
+      <div class="art"><div class="stepvid"><video poster="assets/how-poster.jpg" muted loop playsinline preload="none" data-lazyvideo><source src="assets/how-3.mp4" type="video/mp4"></video><div class="sv-glow"></div><div class="sv-ph"><span class="play"></span></div><div class="sv-cap">launch</div></div></div>
+      <h3>Launch your own</h3><p>Turn any pools.trade pair into a live pool in minutes. The router auto-compounds its fees back into depth — tighter prices, on its own.</p></div>
+  </div>
+</div></section>
+
+<!-- ECOSYSTEM -->
+<section id="ecosystem" style="background:var(--bg-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line)"><div class="wrap">
+  <div class="eco">
+    <div class="eco-head reveal">
+      <span class="eyebrow">// Ecosystem</span>
+      <h2>Built for the world you already trade in</h2>
+      <p>FrogPools plugs into the same rails pools.trade runs on — the launchpad, Uniswap, Robinhood Chain and the wallets you use every day. One marketplace for that whole ecosystem, not a rival to it.</p>
+    </div>
+    <div class="eco-grid">
+      <div class="eco-cell" style="--bc:#79B81E"><span class="eco-logo" style="-webkit-mask-image:url(assets/logos/poolstrade.png);mask-image:url(assets/logos/poolstrade.png)"></span></div>
+      <div class="eco-cell" style="--bc:#FF007A"><span class="eco-logo" style="-webkit-mask-image:url(assets/logos/uniswap.png);mask-image:url(assets/logos/uniswap.png)"></span></div>
+      <div class="eco-cell" style="--bc:#00C805"><span class="eco-logo" style="-webkit-mask-image:url(assets/logos/robinhood.png);mask-image:url(assets/logos/robinhood.png)"></span></div>
+      <div class="eco-cell" style="--bc:#627EEA"><span class="eco-logo" style="-webkit-mask-image:url(assets/logos/ethereum.png);mask-image:url(assets/logos/ethereum.png)"></span></div>
+      <div class="eco-cell" style="--bc:#8C9A2E"><span class="eco-logo" style="-webkit-mask-image:url(assets/logos/usdg.png);mask-image:url(assets/logos/usdg.png)"></span></div>
+      <div class="eco-cell" style="--bc:#F6851B"><span class="eco-logo" style="-webkit-mask-image:url(assets/logos/metamask.png);mask-image:url(assets/logos/metamask.png)"></span></div>
+      <div class="eco-cell" style="--bc:#1D1D1B"><span class="eco-logo" style="-webkit-mask-image:url(assets/logos/ledger.png);mask-image:url(assets/logos/ledger.png)"></span></div>
+      <div class="eco-cell" style="--bc:#5A50F0"><span class="eco-logo" style="-webkit-mask-image:url(assets/logos/blockscout.png);mask-image:url(assets/logos/blockscout.png)"></span></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- SCANNER -->
+<section id="pools"><div class="wrap">
+  <div class="sec-head ctr reveal">
+    <span class="eyebrow">// Pools</span>
+    <h2>The pools.trade launchpad</h2>
+    <p>Discover and stake every pools.trade pool in one place — or launch your own. Real swap fees, deepened automatically.</p>
+  </div>
+  <div class="launch reveal">
+    <div class="orbit" aria-hidden="true">
+      <div class="sweep"></div>
+      <div class="ring"></div><div class="ring r2"></div>
+      <div class="core"><span class="fm frogmask"></span></div>
+      <div class="sat" style="--t:24s"><b>🪷</b></div>
+      <div class="sat" style="--t:17s;animation-delay:-6s"><b>💧</b></div>
+      <div class="sat" style="--t:30s;animation-delay:-15s"><b>🐸</b></div>
+      <div class="sat" style="--t:20s;animation-delay:-3s"><b>🐝</b></div>
+    </div>
+    <div class="launch-list">
+      <div class="launch-head"><span class="lh-t">Top pools</span><span class="launch-live"><span class="d"></span> Live</span></div>
+      <div class="pool-bub"><span class="pav">🪷</span><span class="pnm"><b>$LILYPAD / WETH</b><small>Uniswap v3 · 0.30%</small></span><span class="pool-apr"><b>42.6%</b><small>APR</small></span><a class="pool-stake" href="#">Stake</a></div>
+      <div class="pool-bub"><span class="pav">💧</span><span class="pnm"><b>$SWAMP / WETH</b><small>Uniswap v3 · 0.30%</small></span><span class="pool-apr"><b>61.2%</b><small>APR</small></span><a class="pool-stake" href="#">Stake</a></div>
+      <div class="pool-bub"><span class="pav">🐸</span><span class="pnm"><b>$DROPLET / WETH</b><small>Uniswap v3 · 1.00%</small></span><span class="pool-apr"><b>28.4%</b><small>APR</small></span><a class="pool-stake" href="#">Stake</a></div>
+      <div class="pool-bub"><span class="pav">🐝</span><span class="pnm"><b>$FLYCATCH / WETH</b><small>Uniswap v3 · 1.00%</small></span><span class="pool-apr"><b>88.1%</b><small>APR</small></span><a class="pool-stake" href="#">Stake</a></div>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:42px" class="reveal">
+    <a class="btn btn-primary" href="app.html" style="display:inline-flex"><span class="lbl">Launch the app</span><span class="arw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+  </div>
+</div></section>
+
+<!-- WHY — frog cards -->
+<section id="why"><div class="wrap">
+  <div class="sec-head ctr reveal"><span class="eyebrow">// Why FrogPools</span><h2>Real markets, real fees</h2><p>Rewards come from actual trading, your funds stay yours, and everything settles on-chain.</p></div>
+  <div class="steps">
+    <div class="step reveal"><span class="tick tl"></span><span class="tick tr"></span><span class="tick bl"></span><span class="tick br"></span>
+      <div class="num">[ 01 ]</div>
+      <div class="art"><img class="whyfrog" src="assets/steps/why-1.png" alt="" loading="lazy"></div>
+      <h3>Real fees, not inflation</h3><p>Rewards are a share of actual swap fees — never minted tokens. When volume slows, rewards slow with it. Honest by design.</p></div>
+    <div class="step reveal"><span class="tick tl"></span><span class="tick tr"></span><span class="tick bl"></span><span class="tick br"></span>
+      <div class="num">[ 02 ]</div>
+      <div class="art"><img class="whyfrog" src="assets/steps/why-2.png" alt="" loading="lazy"></div>
+      <h3>Self-custodial by default</h3><p>Your staked LP stays in the on-chain program and you withdraw it yourself, anytime. The router only triggers — funds never leave the contract.</p></div>
+    <div class="step reveal"><span class="tick tl"></span><span class="tick tr"></span><span class="tick bl"></span><span class="tick br"></span>
+      <div class="num">[ 03 ]</div>
+      <div class="art"><img class="whyfrog" src="assets/steps/why-3.png" alt="" loading="lazy"></div>
+      <h3>On-chain &amp; verifiable</h3><p>Every stake, fee stream and route settles on Robinhood Chain and is visible on the block explorer. Nothing off-book.</p></div>
+  </div>
+</div></section>
+
+<section class="community" id="community" data-nav="green">
+  <div class="cmy-track">
+    <div class="cmy-bg" data-par="-0.05"></div>
+    <div class="cmy-col l" id="cmyL">
+      <div class="mini"><div class="av">🐸</div><div class="in"><b>frong</b><small>$5.0M</small></div><div class="chg down">▼ 25.8%</div></div>
+      <div class="mini"><div class="av">🐶</div><div class="in"><b>FROGE</b><small>$754K</small></div><div class="chg down">▼ 62.8%</div></div>
+      <div class="mini"><div class="av">🐷</div><div class="in"><b>Possum</b><small>$558K</small></div><div class="chg up">▲ 46.7%</div></div>
+      <div class="mini"><div class="av">🦄</div><div class="in"><b>Unicorn Pegasus</b><small>$346K</small></div><div class="chg down">▼ 6.6%</div></div>
+      <div class="mini"><div class="av">🐖</div><div class="in"><b>PIGI COIN</b><small>$152K</small></div><div class="chg up">▲ 27.0%</div></div>
+      <div class="mini"><div class="av">👑</div><div class="in"><b>HoodMarket</b><small>$143K</small></div><div class="chg up">▲ 22.1%</div></div>
+      <div class="mini"><div class="av">🐸</div><div class="in"><b>Unifrog</b><small>$148K</small></div><div class="chg down">▼ 7.0%</div></div>
+    </div>
+    <div class="cmy-col r" id="cmyR">
+      <div class="mini"><div class="av">💧</div><div class="in"><b>pools.trade</b><small>$1.1M</small></div><div class="chg down">▼ 49.1%</div></div>
+      <div class="mini"><div class="av">🔥</div><div class="in"><b>Hookr.fun</b><small>$382K</small></div><div class="chg up">▲ 172.9%</div></div>
+      <div class="mini"><div class="av">🦄</div><div class="in"><b>swappy</b><small>$195K</small></div><div class="chg down">▼ 26.0%</div></div>
+      <div class="mini"><div class="av">🐐</div><div class="in"><b>Absolute Goat</b><small>$172K</small></div><div class="chg down">▼ 41.4%</div></div>
+      <div class="mini"><div class="av">🍲</div><div class="in"><b>ChowdLaunch</b><small>$381K</small></div><div class="chg down">▼ 22.3%</div></div>
+      <div class="mini"><div class="av">🅷</div><div class="in"><b>Hookz</b><small>$89K</small></div><div class="chg up">▲ 12.4%</div></div>
+      <div class="mini"><div class="av">🐕</div><div class="in"><b>flipflap</b><small>$143K</small></div><div class="chg up">▲ 22.1%</div></div>
+    </div>
+    <div class="cmy-inner reveal">
+      <span class="eyebrow">[ Join the community ]</span>
+      <h2>Trade, stake &amp; launch on pools.trade.</h2>
+      <p>Discover the hottest pools, stake for real fees, or launch your own. Join the community trading the pools.trade market on FrogPools.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="https://t.me/" target="_blank" rel="noopener"><span class="lbl">Join Telegram</span><span class="arw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+        <a class="btn btn-ghost" href="https://x.com/" target="_blank" rel="noopener"><span class="lbl">Follow on X</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /#page -->
+
+<!-- FOOTER -->
+<footer class="bigfoot" id="bigfoot"><div class="wrap">
+  <div class="bf-top">
+    <h2 class="bf-head">The marketplace for pools.trade.</h2>
+    <div class="bf-links">
+      <a href="#pools">Pools</a><a href="https://x.com/" target="_blank" rel="noopener">X / Twitter</a>
+      <a href="#terminal">Live yield</a><a href="https://t.me/" target="_blank" rel="noopener">Telegram</a>
+      <a href="#how">How it works</a><a href="https://pools.trade/" target="_blank" rel="noopener">pools.trade ↗</a>
+      <a href="#ecosystem">Ecosystem</a><a href="#">Docs</a>
+    </div>
+  </div>
+  <div class="bf-bottom">
+    <div class="bf-name"><span class="fm frogmask"></span><span class="wm">FrogPools</span></div>
+    <div class="bf-legal">© FrogPools 2026<br><a href="#">Terms</a> // <a href="#">Privacy</a></div>
+  </div>
+  <p class="bf-disc">Independent marketplace and launchpad for pools.trade pools on Robinhood Chain. Not affiliated with Uniswap, pools.trade or Robinhood. Rewards come from real trading fees, not emissions — trading, staking and launching involve smart-contract and market risk. Not financial advice.</p>
+</div></footer>
+
+<script>
+(function(){
+  var slides=document.querySelectorAll('#heroSlides .hero-slide');
+  if(slides.length){var si=0;setInterval(function(){slides[si].classList.remove('on');si=(si+1)%slides.length;slides[si].classList.add('on');},2600);}
+
+  [['.eco-grid','.eco-cell']].forEach(function(p){var c=document.querySelector(p[0]);if(!c)return;c.querySelectorAll(p[1]).forEach(function(el,i){el.classList.add('reveal');el.style.setProperty('--d',(i*70)+'ms');});});
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12,rootMargin:'0px 0px -6% 0px'});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+
+  function eo(t){return 1-Math.pow(1-t,3);}
+  var cio=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;cio.unobserve(e.target);var el=e.target,to=parseInt(el.getAttribute('data-count'),10)||0,t0=null;function tk(ts){if(!t0)t0=ts;var p=Math.min((ts-t0)/1100,1);el.textContent=Math.round(to*eo(p));if(p<1)requestAnimationFrame(tk);}requestAnimationFrame(tk);});},{threshold:.6});
+  document.querySelectorAll('[data-count]').forEach(function(el){cio.observe(el);});
+
+  // scroll: progress, nav, parallax, how-it-works staircase-align
+  var prog=document.querySelector('.scrollprog i'),nav=document.querySelector('.nav');
+  var pars=[].slice.call(document.querySelectorAll('[data-par]')).map(function(el){return{el:el,sp:parseFloat(el.getAttribute('data-par'))};});
+  var comm=document.getElementById('community'),cL=document.getElementById('cmyL'),cR=document.getElementById('cmyR');
+  var stepsWrap=document.getElementById('steps');var stepEls=stepsWrap?[].slice.call(stepsWrap.querySelectorAll('.step')):[];
+  var heroEl=document.querySelector('.hero');
+  var ticking=false;
+  function upd(){
+    var st=window.scrollY||0,wh=window.innerHeight,dh=document.documentElement.scrollHeight-wh;
+    if(prog)prog.style.width=(dh>0?st/dh*100:0).toFixed(2)+'%';
+    if(nav){nav.classList.toggle('scrolled',st>8);
+      var navH=nav.offsetHeight||64,og=true;
+      if(heroEl){og=heroEl.getBoundingClientRect().bottom<=navH*0.75;}
+      nav.classList.toggle('nav-green',og);}
+    pars.forEach(function(o){var r=o.el.getBoundingClientRect();var c=r.top+r.height/2-wh/2;o.el.style.transform='translate3d(0,'+(c*o.sp).toFixed(1)+'px,0)';});
+    if(comm&&cL&&cR){var cr=comm.getBoundingClientRect();var tot=comm.offsetHeight-wh;var cp=Math.min(Math.max((-cr.top)/(tot||1),0),1);var rng=wh*0.95;
+      cL.style.transform='translateY('+((0.5-cp)*rng).toFixed(1)+'px)';
+      cR.style.transform='translateY('+((0.5-cp)*rng*1.18-30).toFixed(1)+'px)';}
+    if(stepEls.length){var r=stepsWrap.getBoundingClientRect();var p=1-Math.min(Math.max((r.top-wh*0.15)/(wh*0.7),0),1);
+      stepEls.forEach(function(el,i){var off=(i*70)*(1-p);el.style.transform='translateY('+off.toFixed(1)+'px)';el.style.opacity=(0.25+0.75*p).toFixed(2);});}
+    ticking=false;
+  }
+  window.addEventListener('scroll',function(){if(!ticking){ticking=true;requestAnimationFrame(upd);}},{passive:true});
+  window.addEventListener('resize',upd);upd();
+
+  function fit(){var pg=document.getElementById('page'),ft=document.getElementById('bigfoot');if(pg&&ft)pg.style.marginBottom=ft.offsetHeight+'px';}
+  window.addEventListener('load',fit);window.addEventListener('resize',fit);fit();
+
+  // performance: only decode/play videos while they're on screen; pause the rest
+  var lazyVids=[].slice.call(document.querySelectorAll('video[data-lazyvideo]'));
+  if(lazyVids.length){
+    // hide a video's placeholder overlay once it actually plays real footage
+    lazyVids.forEach(function(v){
+      v.addEventListener('playing',function(){
+        var wrap=v.closest('.stepvid')||v.closest('.vf-screen');
+        if(wrap){var ph=wrap.querySelector('.sv-ph,.vf-ph');if(ph)ph.style.opacity='0';}
+      });
+    });
+    var vio=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        var v=e.target;
+        if(e.isIntersecting){var p=v.play();if(p&&p.catch)p.catch(function(){});}
+        else{try{v.pause();}catch(_){}}
+      });
+    },{threshold:.2});
+    lazyVids.forEach(function(v){vio.observe(v);});
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FrogPools — Explore</title>
+<meta name="description" content="Explore pools.trade liquidity pools on FrogPools. Stake, earn real swap fees in WETH, and let the router compound depth.">
+<meta name="theme-color" content="#8CBE1B">
+<link rel="icon" type="image/png" href="assets/frog-64.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="app.css">
+</head>
+<body data-page="explore">
+<div id="nav-mount"></div>
+
+<main class="wrap applayout">
+  <div class="main">
+    <!-- STAKING SPOTLIGHT -->
+    <section class="sec" style="padding-top:8px">
+      <div class="shead"><h2><span class="ico">⚡</span> Staking spotlight</h2><a class="btn btn-ghost" href="collections.html">View all</a></div>
+      <div class="spot">
+        <div class="scard"><div class="art artg1"><span class="badge"><span class="d"></span> Open stage</span>🪷</div>
+          <div class="body"><div class="row"><span class="av">🪷</span><h3>$LILYPAD / WETH<svg class="verified"><use href="#chk"/></svg></h3></div>
+            <div class="meta"><div><div class="k">APR</div><div class="v">42.6% <small>fees</small></div></div><div style="text-align:right"><div class="k">Staked</div><div class="v">$68.4k <small>/ $100k</small></div></div></div>
+            <div class="bar"><i style="width:68%"></i></div></div></div>
+        <div class="scard"><div class="art artg2"><span class="badge ended"><span class="d"></span> Filled</span>💧</div>
+          <div class="body"><div class="row"><span class="av">💧</span><h3>$SWAMP / WETH<svg class="verified"><use href="#chk"/></svg></h3></div>
+            <div class="meta"><div><div class="k">APR</div><div class="v">61.2% <small>fees</small></div></div><div style="text-align:right"><div class="k">Staked</div><div class="v">$80k <small>/ $80k</small></div></div></div>
+            <div class="bar"><i style="width:100%"></i></div></div></div>
+        <div class="scard"><div class="art artg3"><span class="badge"><span class="d"></span> Open stage</span>🐸</div>
+          <div class="body"><div class="row"><span class="av">🐸</span><h3>$DROPLET / WETH<svg class="verified"><use href="#chk"/></svg></h3></div>
+            <div class="meta"><div><div class="k">APR</div><div class="v">28.4% <small>fees</small></div></div><div style="text-align:right"><div class="k">Staked</div><div class="v">$31.7k <small>/ $40k</small></div></div></div>
+            <div class="bar"><i style="width:79%"></i></div></div></div>
+        <div class="scard"><div class="art artg4"><span class="badge"><span class="d"></span> Open stage</span>🐝</div>
+          <div class="body"><div class="row"><span class="av">🐝</span><h3>$FLYCATCH / WETH<svg class="verified"><use href="#chk"/></svg></h3></div>
+            <div class="meta"><div><div class="k">APR</div><div class="v">88.1% <small>fees</small></div></div><div style="text-align:right"><div class="k">Staked</div><div class="v">$12.3k <small>/ $30k</small></div></div></div>
+            <div class="bar"><i style="width:41%"></i></div></div></div>
+      </div>
+    </section>
+
+    <!-- TRENDING -->
+    <section class="sec">
+      <div class="shead"><h2><span class="ico">🔥</span> Trending</h2><a class="btn btn-ghost" href="trending.html">See all</a></div>
+      <div class="tbig">
+        <div class="tcard"><div class="bg artg3">🪷</div><div class="scrim"></div>
+          <div class="name"><span class="av">🪷</span><b>$LILYPAD / WETH<svg class="verified"><use href="#chk"/></svg></b></div>
+          <div class="stats"><div><div class="k">TVL</div><div class="v">$68.4k</div></div><div><div class="k">7d fees</div><div class="v">$190k</div></div><div><div class="k">24h</div><div class="v up">+12.4%</div></div><div id="sp1"></div></div></div>
+        <div class="tcard"><div class="bg artg2">💧</div><div class="scrim"></div>
+          <div class="name"><span class="av">💧</span><b>$SWAMP / WETH<svg class="verified"><use href="#chk"/></svg></b></div>
+          <div class="stats"><div><div class="k">TVL</div><div class="v">$54.1k</div></div><div><div class="k">7d fees</div><div class="v">$142k</div></div><div><div class="k">24h</div><div class="v up">+35.5%</div></div><div id="sp2"></div></div></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- LIVE ACTIVITY SIDEBAR -->
+  <aside class="activity-side">
+    <div class="acard">
+      <div class="ah"><h3><span class="ico">📈</span> Live activity</h3><div class="seg"><span class="on">Stakes</span><span>Router</span></div></div>
+      <div class="afeed" id="feed"></div>
+    </div>
+  </aside>
+</main>
+
+<div id="foot-mount"></div>
+<script src="app-shell.js"></script>
+<script>
+(function(){
+  var s1=document.getElementById('sp1'),s2=document.getElementById('sp2');
+  if(window.fpSpark){if(s1)s1.innerHTML=fpSpark(1,120,34);if(s2)s2.innerHTML=fpSpark(4,120,34);
+    document.querySelectorAll('.tcard .spark polyline').forEach(function(p){p.setAttribute('stroke','#B6E63A');});}
+  var feed=[
+    ['0x..f495','staked','$LILYPAD / WETH','2.50 LP','$1,240'],
+    ['0x..3e7d','compounded','$DROPLET / WETH','+$4.2k depth','router'],
+    ['0x..f9f9','claimed','$FLYCATCH / WETH','0.052 WETH','$177.40'],
+    ['0x..a1c8','staked','$SWAMP / WETH','5.10 LP','$3,090'],
+    ['0x..77e2','compounded','$LILYPAD / WETH','+$9.1k','milestone'],
+    ['0x..60af','staked','$POSSUM / WETH','1.20 LP','$740'],
+    ['0x..7a09','claimed','$DROPLET / WETH','0.019 WETH','$64.80'],
+    ['0x..5786','staked','$PEGASUS / WETH','0.80 LP','$512'],
+    ['0x..70f4','compounded','$SWAMP / WETH','+$3.3k depth','router'],
+    ['0x..1999','staked','$GOAT / WETH','2.00 LP','$980']
+  ];
+  var fe=document.getElementById('feed');
+  if(fe){fe.innerHTML=feed.map(function(r){
+    return '<div class="arow"><span class="who"><span class="wa"></span><span class="addr">'+r[0]+'</span> <span class="vb">'+r[1]+'</span> <b>'+r[2]+'</b></span><span class="amt"><b>'+r[3]+'</b><small>'+r[4]+'</small></span></div>';
+  }).join('');}
+})();
+</script>
+</body>
+</html>

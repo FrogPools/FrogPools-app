@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FrogPools — Activity</title>
+<meta name="description" content="Live on-chain activity across FrogPools — stakes, router compounds, claims and milestones on pools.trade pools.">
+<meta name="theme-color" content="#8CBE1B">
+<link rel="icon" type="image/png" href="assets/frog-64.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="app.css">
+</head>
+<body data-page="activity">
+<div id="nav-mount"></div>
+
+<div class="wrap pagetitle">
+  <h1>Activity</h1>
+  <p>Every stake, router compound, claim and milestone across FrogPools pools — live from Robinhood Chain.</p>
+</div>
+
+<main class="wrap">
+  <div class="shead" style="margin-top:24px">
+    <div class="seg"><span class="on">All</span><span>Stakes</span><span>Router</span><span>Claims</span></div>
+    <span class="wallet" style="display:inline-flex"><span class="av"></span> Live feed</span>
+  </div>
+  <div class="tblwrap">
+    <table class="dtable">
+      <thead><tr><th class="l">Wallet</th><th class="l">Action</th><th class="l">Pool</th><th class="hide-m">Trigger</th><th>Amount</th><th class="hide-m">Value</th><th class="hide-m">When</th></tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+  <div class="pag"><a href="#">←</a><a class="on" href="#">1</a><a href="#">2</a><a href="#">3</a><a href="#">4</a><a href="#">5</a><a href="#">→</a></div>
+</main>
+
+<div id="foot-mount"></div>
+<script src="app-shell.js"></script>
+<script>
+(function(){
+  var A=[
+    ['0x..f495','staked','🪷','$LILYPAD / WETH','wallet','2.50 LP','$1,240','18m ago'],
+    ['0x..3e7d','compounded','🐸','$DROPLET / WETH','router · auto','+$4.2k depth','—','24m ago'],
+    ['0x..f9f9','claimed','🐝','$FLYCATCH / WETH','wallet','0.052 WETH','$177.40','41m ago'],
+    ['0x..a1c8','staked','💧','$SWAMP / WETH','wallet','5.10 LP','$3,090','50m ago'],
+    ['0x..77e2','compounded','🪷','$LILYPAD / WETH','router · milestone','+$9.1k depth','—','1h ago'],
+    ['0x..60af','staked','🐖','$POSSUM / WETH','wallet','1.20 LP','$740','1h ago'],
+    ['0x..7a09','claimed','🐸','$DROPLET / WETH','wallet','0.019 WETH','$64.80','2h ago'],
+    ['0x..5786','staked','🦄','$PEGASUS / WETH','wallet','0.80 LP','$512','2h ago'],
+    ['0x..70f4','compounded','💧','$SWAMP / WETH','router · auto','+$3.3k depth','—','2h ago'],
+    ['0x..1999','staked','🐐','$GOAT / WETH','wallet','2.00 LP','$980','3h ago'],
+    ['0x..2b4d','unstaked','🐝','$FLYCATCH / WETH','wallet','1.10 LP','$690','3h ago'],
+    ['0x..c0aa','compounded','🐐','$GOAT / WETH','router · milestone','+$6.8k depth','—','4h ago']
+  ];
+  var tb=document.getElementById('tbody');
+  if(tb){tb.innerHTML=A.map(function(r){
+    return '<tr><td class="l" style="color:var(--ink-3)">'+r[0]+'</td>'+
+      '<td class="l"><span style="color:var(--lime-2);font-weight:700">'+r[1]+'</span></td>'+
+      '<td class="l"><span class="pair"><span class="av" style="width:28px;height:28px;font-size:15px">'+r[2]+'</span><b>'+r[3]+'</b></span></td>'+
+      '<td class="hide-m" style="color:var(--ink-3)">'+r[4]+'</td><td>'+r[5]+'</td><td class="hide-m">'+r[6]+'</td><td class="hide-m" style="color:var(--ink-3)">'+r[7]+'</td></tr>';
+  }).join('');}
+})();
+</script>
+</body>
+</html>

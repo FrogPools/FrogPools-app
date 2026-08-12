@@ -1,0 +1,75 @@
+// FrogPools — Prisma schema (off-chain demo). Postgres.
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// A wallet that has signed in (SIWE)
+model User {
+  id        String     @id @default(cuid())
+  address   String     @unique // lowercase 0x address
+  nonce     String? // current SIWE nonce (one-shot)
+  createdAt DateTime   @default(now())
+  positions Position[]
+  created   Pool[]     @relation("creator")
+}
+
+// A pools.trade pool listed on FrogPools
+model Pool {
+  id        String     @id @default(cuid())
+  slug      String     @unique // e.g. "lilypad-weth"
+  token     String // e.g. "$LILYPAD"
+  pair      String // e.g. "$LILYPAD / WETH"
+  emoji     String     @default("🐸")
+  feeTier   Float      @default(0.3) // percent
+  apr       Float      @default(0) // percent, fees-only
+  tvl       Float      @default(0) // usd
+  target    Float      @default(0) // usd staking target
+  vol7d     Float      @default(0) // usd 7d fee volume
+  change24h Float      @default(0) // percent
+  stage     String     @default("open") // open | filled | ended
+  verified  Boolean    @default(true)
+  trending  Boolean    @default(false)
+  isNew     Boolean    @default(false)
+  createdAt DateTime   @default(now())
+  creatorId String?
+  creator   User?      @relation("creator", fields: [creatorId], references: [id])
+  positions Position[]
+  activity  Activity[]
+}
+
+// A wallet's stake in a pool
+model Position {
+  id        String   @id @default(cuid())
+  userId    String
+  poolId    String
+  lp        Float    @default(0) // staked LP units
+  valueUsd  Float    @default(0) // usd value staked
+  feesWeth  Float    @default(0) // accrued, unclaimed WETH
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  pool      Pool     @relation(fields: [poolId], references: [id])
+
+  @@unique([userId, poolId])
+}
+
+// Live activity feed entry
+model Activity {
+  id        String   @id @default(cuid())
+  poolId    String
+  address   String // actor (lowercase 0x or short form)
+  verb      String // staked | unstaked | claimed | compounded
+  amount    String // display string, e.g. "2.50 LP"
+  valueUsd  String   @default("") // display string, e.g. "$1,240"
+  trigger   String   @default("wallet") // wallet | router · auto | router · milestone
+  createdAt DateTime @default(now())
+  pool      Pool     @relation(fields: [poolId], references: [id])
+
+  @@index([createdAt])
+  @@index([poolId])
+}

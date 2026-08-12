@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FrogPools — Trending</title>
+<meta name="description" content="Trending pools.trade liquidity pools on FrogPools, ranked by APR, TVL and fee volume.">
+<meta name="theme-color" content="#8CBE1B">
+<link rel="icon" type="image/png" href="assets/frog-64.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="app.css">
+</head>
+<body data-page="trending">
+<div id="nav-mount"></div>
+
+<div class="wrap pagetitle">
+  <h1>Trending pools</h1>
+  <p>The pools moving the most fee volume right now. Ranked by APR, TVL and 7-day fees.</p>
+</div>
+
+<main class="wrap">
+  <div class="shead" style="margin-top:24px">
+    <div class="seg"><span class="on">7d</span><span>24h</span><span>1h</span></div>
+    <div class="seg"><span class="on">By volume</span><span>By APR</span><span>By TVL</span></div>
+  </div>
+  <div class="tblwrap">
+    <table class="dtable">
+      <thead><tr><th class="l">#</th><th class="l">Pool</th><th>TVL</th><th>APR</th><th class="hide-m">24h</th><th class="hide-m">7d fees</th><th class="hide-m">Last 7d</th><th></th></tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+  <div class="pag"><a href="#">←</a><a class="on" href="#">1</a><a href="#">2</a><a href="#">3</a><a href="#">4</a><a href="#">5</a><a href="#">→</a></div>
+</main>
+
+<div id="foot-mount"></div>
+<script src="app-shell.js"></script>
+<script>
+(function(){
+  var rows=[
+    ['🪷','$LILYPAD / WETH','$68.4k','42.6%','+12.4%','$190k'],
+    ['💧','$SWAMP / WETH','$54.1k','61.2%','+35.5%','$142k'],
+    ['🐸','$DROPLET / WETH','$31.7k','28.4%','+15.4%','$88k'],
+    ['🐝','$FLYCATCH / WETH','$12.3k','88.1%','+143.9%','$64k'],
+    ['🐖','$POSSUM / WETH','$18.9k','54.7%','+43.4%','$52k'],
+    ['🦄','$PEGASUS / WETH','$28.0k','33.8%','+26.7%','$41k'],
+    ['🐐','$GOAT / WETH','$24.0k','47.3%','+51.7%','$38k'],
+    ['🔥','$HOOKR / WETH','$16.5k','72.4%','+18.2%','$33k'],
+    ['🐕','$FLIPFLAP / WETH','$9.8k','31.0%','-6.6%','$21k'],
+    ['🐸','$UNIFROG / WETH','$14.8k','44.8%','+7.0%','$19k']
+  ];
+  var tb=document.getElementById('tbody');
+  if(tb){tb.innerHTML=rows.map(function(r,i){
+    var pct=r[4].charAt(0)==='-'?'<span class="down">'+r[4]+'</span>':'<span class="up">'+r[4]+'</span>';
+    var sp=window.fpSpark?fpSpark(i+1,110,30):'';
+    return '<tr><td class="l" style="color:var(--ink-4)">'+(i+1)+'</td>'+
+      '<td class="l"><span class="pair"><span class="av">'+r[0]+'</span><b>'+r[1]+'<svg class="verified"><use href="#chk"/></svg></b></span></td>'+
+      '<td>'+r[2]+'</td><td class="apr">'+r[3]+'</td><td class="hide-m">'+pct+'</td><td class="hide-m">'+r[5]+'</td>'+
+      '<td class="hide-m">'+sp+'</td><td><a class="stk" href="launch.html">Stake</a></td></tr>';
+  }).join('');}
+})();
+</script>
+</body>
+</html>

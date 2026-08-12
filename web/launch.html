@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FrogPools — Launch a pool</title>
+<meta name="description" content="Launch a staking pool on FrogPools — turn any pools.trade pair into a self-custodial, fee-earning, auto-compounding pool.">
+<meta name="theme-color" content="#8CBE1B">
+<link rel="icon" type="image/png" href="assets/frog-64.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="app.css">
+</head>
+<body data-page="launch">
+<div id="nav-mount"></div>
+
+<div class="wrap pagetitle">
+  <h1>Launch a pool</h1>
+  <p>Turn any pools.trade pair into a self-custodial staking pool. Set the target, and the router compounds fees back into depth automatically.</p>
+</div>
+
+<main class="wrap">
+  <div class="launch-grid">
+    <!-- form -->
+    <div class="lcard">
+      <h3>Pool details</h3>
+      <div class="sub">Interface preview — nothing is deployed on-chain from this form yet.</div>
+      <div class="field"><label>Token</label><input type="text" placeholder="e.g. $LILYPAD contract address or ticker"></div>
+      <div class="field"><label>Paired with</label>
+        <select><option>WETH</option><option>USDG</option><option>pools.trade native</option></select></div>
+      <div class="field"><div class="two">
+        <div><label>Fee tier</label><select><option>0.30%</option><option>1.00%</option><option>0.05%</option></select></div>
+        <div><label>Staking target (TVL)</label><input type="text" placeholder="$100,000"></div>
+      </div></div>
+      <div class="field"><div class="two">
+        <div><label>Router cadence</label><select><option>Every 6h</option><option>Every 12h</option><option>Daily</option><option>Milestone only</option></select></div>
+        <div><label>Reward token</label><input type="text" value="WETH" readonly></div>
+      </div></div>
+      <div class="field"><label>Description</label><textarea rows="3" placeholder="Tell stakers what this pool is about…"></textarea></div>
+      <button class="btn btn-lime" type="button" style="width:100%;justify-content:center;padding:14px" onclick="return false">Connect wallet to launch</button>
+    </div>
+
+    <!-- how it works -->
+    <div class="lcard">
+      <h3>How launching works</h3>
+      <div class="sub">Four steps from pair to a live, auto-compounding pool.</div>
+      <ol class="steps">
+        <li><span class="n">1</span><div><b>Pick the pair</b><small>Any pools.trade token paired with WETH. We read the existing pool on-chain.</small></div></li>
+        <li><span class="n">2</span><div><b>Set the target &amp; cadence</b><small>Choose a TVL target and how often the router recycles fees into depth.</small></div></li>
+        <li><span class="n">3</span><div><b>Deploy the staking contract</b><small>Self-custodial — stakers keep withdrawal rights; the router only triggers.</small></div></li>
+        <li><span class="n">4</span><div><b>Go live</b><small>Your pool appears in Explore &amp; Collections and starts streaming WETH fees.</small></div></li>
+      </ol>
+      <div style="margin-top:22px;padding:16px;border-radius:var(--r-3);background:var(--panel-2);border:1px solid var(--line);font-size:13px;color:var(--ink-2)">
+        Rewards come from real swap fees, not emissions. Launching and staking involve smart-contract and market risk. Not financial advice.
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="foot-mount"></div>
+<script src="app-shell.js"></script>
+</body>
+</html>
