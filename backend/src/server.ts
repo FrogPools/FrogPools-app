@@ -3,6 +3,7 @@ import cors from '@fastify/cors';
 import rateLimit from '@fastify/rate-limit';
 import { env } from './env.js';
 import { ensureSeed, ensureIcons } from './lib/bootstrap.js';
+import { startSimulator } from './lib/simulator.js';
 import { registerAuth } from './plugins/authenticate.js';
 import { healthRoutes } from './routes/health.js';
 import { authRoutes } from './routes/auth.js';
@@ -41,6 +42,9 @@ async function main() {
   }
 
   await app.listen({ port: env.PORT, host: '0.0.0.0' });
+
+  // demo activity simulator — keeps the feed & numbers moving on their own
+  startSimulator();
 }
 
 main().catch((err) => {

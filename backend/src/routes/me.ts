@@ -27,7 +27,7 @@ export async function meRoutes(app: FastifyInstance) {
         await prisma.position.update({ where: { id: p.id }, data: { feesWeth, updatedAt: now } });
       }
       out.push({
-        pool: { slug: p.pool.slug, pair: p.pool.pair, emoji: p.pool.emoji, apr: p.pool.apr },
+        pool: { slug: p.pool.slug, pair: p.pool.pair, emoji: p.pool.emoji, apr: p.pool.apr, icon: p.pool.icon },
         lp: p.lp, valueUsd: p.valueUsd, feesWeth: Number(feesWeth.toFixed(6)),
         feesUsd: Number((feesWeth * WETH_USD).toFixed(2)),
       });
