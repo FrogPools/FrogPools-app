@@ -16,20 +16,18 @@ const orderBy = { apr: { apr: 'desc' }, tvl: { tvl: 'desc' }, vol: { vol7d: 'des
 export async function poolRoutes(app: FastifyInstance) {
   app.get('/api/pools', async (req) => {
     const q = listQuery.parse(req.query);
-    const base =
-      q.filter === 'open' ? { stage: 'open' } :
-      q.filter === 'trending' ? { trending: true } :
-      q.filter === 'new' ? { isNew: true } : {};
-    const search =
-      q.q && q.q.length
-        ? {
-            OR: [
-              { token: { contains: q.q, mode: 'insensitive' as const } },
-              { pair: { contains: q.q, mode: 'insensitive' as const } },
-            ],
-          }
-        : {};
-    const where = { ...base, ...search };
+    // built as a plain object (typed `any`) so the union of filter shapes and the
+    // case-insensitive search mode can never trip up `tsc` during the Railway build.
+    const where: any = {};
+    if (q.filter === 'open') where.stage = 'open';
+    else if (q.filter === 'trending') where.trending = true;
+    else if (q.filter === 'new') where.isNew = true;
+    if (q.q && q.q.length) {
+      where.OR = [
+        { token: { contains: q.q, mode: 'insensitive' } },
+        { pair: { contains: q.q, mode: 'insensitive' } },
+      ];
+    }
     const [items, total] = await Promise.all([
       prisma.pool.findMany({
         where,
