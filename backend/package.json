@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "FrogPools backend — off-chain demo API for the pools.trade marketplace (Fastify + Prisma + Postgres).",
+  "description": "FrogPools backend - off-chain demo API for the pools.trade marketplace (Fastify + Prisma + Postgres).",
   "engines": { "node": ">=20" },
   "scripts": {
     "dev": "tsx watch src/server.ts",
