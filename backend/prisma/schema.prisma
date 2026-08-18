@@ -26,6 +26,7 @@ model Pool {
   pair      String // e.g. "$LILYPAD / WETH"
   emoji     String     @default("🐸")
   icon      String     @default("") // avatar image path/URL served to the frontend
+  ca        String     @default("") // real token contract address (Robinhood Chain), for buy/explorer links
   feeTier   Float      @default(0.3) // percent
   apr       Float      @default(0) // percent, fees-only
   tvl       Float      @default(0) // usd

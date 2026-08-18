@@ -15,6 +15,7 @@ export async function launchRoutes(app: FastifyInstance) {
         feeTier: z.number().default(0.3),
         target: z.number().positive().max(10_000_000).default(100_000),
         emoji: z.string().default('🐸'),
+        icon: z.string().max(600_000).optional(), // pool image: a URL or a (resized) data URL
       })
       .safeParse(req.body);
     if (!body.success) return reply.code(400).send({ error: 'token required' });
@@ -28,7 +29,7 @@ export async function launchRoutes(app: FastifyInstance) {
 
     const pool = await prisma.pool.create({
       data: {
-        slug, token, pair, emoji: body.data.emoji,
+        slug, token, pair, emoji: body.data.emoji, icon: body.data.icon || '',
         feeTier: body.data.feeTier, target: body.data.target,
         apr: 0, tvl: 0, stage: 'open', isNew: true, creatorId: sub,
       },

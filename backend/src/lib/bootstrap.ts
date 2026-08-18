@@ -6,7 +6,7 @@ import { prisma } from './prisma.js';
 // Fallback = a small invented catalog if the explorer is unreachable.
 
 type Seed = {
-  token: string; emoji: string; icon?: string; apr: number; tvl: number; target: number;
+  token: string; emoji: string; icon?: string; ca?: string; apr: number; tvl: number; target: number;
   vol7d: number; change24h: number; stage: string; trending?: boolean; isNew?: boolean; feeTier?: number;
 };
 
@@ -76,7 +76,7 @@ async function fetchRealTokens(limit = 34): Promise<RealToken[]> {
 async function createPool(seed: Seed, slug: string): Promise<void> {
   const pool = await prisma.pool.create({
     data: {
-      slug, token: seed.token, pair: `${seed.token} / WETH`, emoji: seed.emoji, icon: seed.icon || '',
+      slug, token: seed.token, pair: `${seed.token} / WETH`, emoji: seed.emoji, icon: seed.icon || '', ca: seed.ca || '',
       apr: seed.apr, tvl: seed.tvl, target: seed.target, vol7d: seed.vol7d, change24h: seed.change24h,
       stage: seed.stage, trending: !!seed.trending, isNew: !!seed.isNew, verified: true, feeTier: seed.feeTier ?? 0.3,
     },
@@ -109,7 +109,7 @@ async function seedRealTokens(tokens: RealToken[]): Promise<void> {
     if (!slug || usedSlugs.has(slug)) continue;
     usedSlugs.add(slug);
     const m = deriveMetrics(tk.symbol, i);
-    await createPool({ token, emoji: '', icon: tk.icon, ...m }, slug);
+    await createPool({ token, emoji: '', icon: tk.icon, ca: tk.address, ...m }, slug);
   }
 }
 
@@ -139,6 +139,37 @@ async function wipeCatalog(): Promise<void> {
 // ensureIcons kept for API compatibility (real icons now come straight from the seed).
 export async function ensureIcons(): Promise<void> { /* no-op: icons are set at seed time */ }
 
+// Make sure the `ca` (contract address) column exists — safe idempotent DDL so we
+// don't need a Prisma migration or a full reseed to add it.
+export async function ensureCaColumn(): Promise<void> {
+  try {
+    await prisma.$executeRawUnsafe('ALTER TABLE "Pool" ADD COLUMN IF NOT EXISTS "ca" TEXT NOT NULL DEFAULT \'\';');
+  } catch (e) {
+    console.warn('[bootstrap] ensureCaColumn failed', e);
+  }
+}
+
+// Backfill contract addresses for existing pools (match Blockscout token by symbol),
+// so buy/explorer links work without wiping the catalog.
+async function backfillCa(): Promise<void> {
+  try {
+    const pools = await prisma.pool.findMany({ where: { ca: '' }, select: { id: true, token: true } });
+    if (!pools.length) return;
+    const tokens = await fetchRealTokens(60);
+    if (!tokens.length) return;
+    const bySym = new Map(tokens.map((t) => [t.symbol.toUpperCase(), t.address]));
+    let n = 0;
+    for (const p of pools) {
+      const sym = (p.token || '').replace(/\$/g, '').trim().toUpperCase();
+      const addr = bySym.get(sym);
+      if (addr) { await prisma.pool.update({ where: { id: p.id }, data: { ca: addr } }); n++; }
+    }
+    if (n) console.log(`[bootstrap] backfilled ca for ${n} pools`);
+  } catch (e) {
+    console.warn('[bootstrap] backfillCa skipped', e);
+  }
+}
+
 /**
  * Boot seeding:
  *  - RESEED=1  -> wipe the catalog and reseed from live Robinhood Chain tokens (real logos).
@@ -146,6 +177,7 @@ export async function ensureIcons(): Promise<void> { /* no-op: icons are set at 
  *  - otherwise -> leave the existing catalog untouched.
  */
 export async function ensureSeed(): Promise<void> {
+  await ensureCaColumn(); // must run before any full Pool select (routes select `ca`)
   const reseed = truthy(process.env.RESEED);
   const count = await prisma.pool.count();
 
@@ -161,7 +193,7 @@ export async function ensureSeed(): Promise<void> {
     if (count > 0) return;
   }
 
-  if (count > 0) return; // catalog already present
+  if (count > 0) { await backfillCa(); return; } // catalog present: fill missing contract addresses
 
   // empty DB: prefer real tokens, fall back to invented
   const tokens = await fetchRealTokens(34);
