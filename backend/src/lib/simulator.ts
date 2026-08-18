@@ -21,7 +21,7 @@ let timer: ReturnType<typeof setInterval> | null = null;
 export function startSimulator(): void {
   const enabled = (process.env.SIM_ENABLED ?? 'true') !== 'false';
   if (!enabled) return;
-  const interval = Math.max(2000, Number(process.env.SIM_INTERVAL_MS ?? '9000'));
+  const interval = Math.max(2000, Number(process.env.SIM_INTERVAL_MS ?? '7000'));
   if (timer) clearInterval(timer);
   timer = setInterval(() => { tick().catch(() => {}); }, interval);
   // fire one shortly after boot so the feed looks fresh immediately
@@ -66,11 +66,22 @@ async function tick(): Promise<void> {
   const nextChange = clamp(pool.change24h + rnd(-0.6, 0.8), -25, 180);
   const nextApr = clamp(pool.apr + rnd(-0.3, 0.35), 3, 140);
 
+  // milestone: an open pool crossing its staking target flips to "filled" and
+  // emits a router milestone event — a believable "pool just filled" moment.
+  const crossed = pool.stage === 'open' && pool.target > 0 && nextTvl >= pool.target;
+  const nextStage = crossed ? 'filled' : pool.stage;
+
   try {
-    await prisma.$transaction([
+    const writes: any[] = [
       prisma.activity.create({ data: { poolId: pool.id, address: hexShort(), verb, amount, valueUsd, trigger } }),
-      prisma.pool.update({ where: { id: pool.id }, data: { tvl: nextTvl, vol7d: nextVol, change24h: nextChange, apr: nextApr } }),
-    ]);
+      prisma.pool.update({ where: { id: pool.id }, data: { tvl: nextTvl, vol7d: nextVol, change24h: nextChange, apr: nextApr, stage: nextStage } }),
+    ];
+    if (crossed) {
+      writes.push(prisma.activity.create({
+        data: { poolId: pool.id, address: hexShort(), verb: 'compounded', amount: 'target reached — depth locked', valueUsd: '', trigger: 'router · milestone' },
+      }));
+    }
+    await prisma.$transaction(writes);
   } catch (_) { /* ignore transient errors */ }
 
   // prune the activity table so it never grows unbounded
