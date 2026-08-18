@@ -18,7 +18,7 @@ Staking and an automated **router** (which compounds fees back into pool depth) 
 
 ## Features
 
-- 🔎 **Explore** — spotlight, trending big-cards, live activity feed, price ticker.
+- 🔎 **Explore** - spotlight, trending big-cards, live activity feed, price ticker.
 - 🗂 **Collections** — every pool in a filterable grid (open / trending / new · top-APR / TVL / 24h fees).
 - 📈 **Trending** — ranked table with APR, TVL, 24h, 7-day fees and sparklines.
 - ⚡ **Activity** — full stakes / router / claims feed.
@@ -88,13 +88,13 @@ Point the frontend at the API by setting the base URL to your backend (local or 
 
 ## Roadmap
 
-- **Phase A — off-chain demo** *(this repo)*: real wallet sign-in (SIWE), pools/stakes/activity in Postgres, live feeds.
-- **Phase B — on-chain**: Solidity staking + auto-router on Robinhood Chain, called from the frontend via viem/wagmi.
+- **Phase A - off-chain demo** *(this repo)*: real wallet sign-in (SIWE), pools/stakes/activity in Postgres, live feeds.
+- **Phase B - on-chain**: Solidity staking + auto-router on Robinhood Chain, called from the frontend via viem/wagmi.
 
 ## Disclaimer
 
 Independent marketplace & launchpad for pools.trade pools on Robinhood Chain. Not affiliated with Uniswap,
-pools.trade or Robinhood. Rewards come from real trading fees, not emissions — trading, staking and launching
+pools.trade or Robinhood. Rewards come from real trading fees, not emissions - trading, staking and launching
 involve smart-contract and market risk. Not financial advice.
 
 <div align="center">
