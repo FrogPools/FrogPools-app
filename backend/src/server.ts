@@ -14,6 +14,7 @@ import { activityRoutes } from './routes/activity.js';
 import { meRoutes } from './routes/me.js';
 import { launchRoutes } from './routes/launch.js';
 import { statsRoutes } from './routes/stats.js';
+import { earlyRoutes } from './routes/early.js';
 
 async function main() {
   // trustProxy: Railway terminates TLS at a proxy, so req.ip / rate-limit must
@@ -56,6 +57,7 @@ async function main() {
   await app.register(meRoutes);
   await app.register(launchRoutes);
   await app.register(statsRoutes);
+  await app.register(earlyRoutes);
 
   // Verify DB connectivity up front so a bad DATABASE_URL fails loudly at boot
   // (instead of every request 500-ing later with a cryptic message).

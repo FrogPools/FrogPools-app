@@ -75,3 +75,22 @@ model Activity {
   @@index([createdAt])
   @@index([poolId])
 }
+
+// Early-access / staking-intent lead. Captured when a wallet passes the on-chain
+// balance check and signs a stake-intent message. No funds move; this is a
+// verifiable, signed record that the wallet asked to stake when staking goes live.
+model EarlyAccess {
+  id         String   @id @default(cuid())
+  address    String // lowercase 0x, recovered from the signature server-side
+  poolSlug   String   @default("")
+  pair       String   @default("")
+  amountUsd  Float    @default(0) // amount the user intended to stake
+  amountWeth Float    @default(0) // amount converted to WETH at request time
+  wethBal    Float    @default(0) // the wallet's WETH balance at request time
+  signature  String // the personal_sign signature (EIP-191)
+  message    String // the exact message that was signed
+  createdAt  DateTime @default(now())
+
+  @@index([address])
+  @@index([createdAt])
+}
