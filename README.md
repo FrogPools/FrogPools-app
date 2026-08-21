@@ -13,7 +13,7 @@
 ## Overview
 
 **FrogPools** is the fast marketplace and launchpad for **pools.trade** pools. Discover trending pools,
-stake for a real share of swap fees in WETH, trade, or launch your own — self-custodial, on Robinhood Chain.
+stake for a real share of swap fees in WETH, trade, or launch your own - self-custodial, on Robinhood Chain.
 Staking and an automated **router** (which compounds fees back into pool depth) are features inside every pool.
 
 ## Features
