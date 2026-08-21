@@ -19,11 +19,11 @@ Staking and an automated **router** (which compounds fees back into pool depth) 
 ## Features
 
 - 🔎 **Explore** - spotlight, trending big-cards, live activity feed, price ticker.
-- 🗂 **Collections** — every pool in a filterable grid (open / trending / new · top-APR / TVL / 24h fees).
-- 📈 **Trending** — ranked table with APR, TVL, 24h, 7-day fees and sparklines.
-- ⚡ **Activity** — full stakes / router / claims feed.
-- 🚀 **Launch** — turn any pair into a live pool in minutes.
-- 💧 **Real yield** — rewards are a share of actual swap fees in WETH, not emissions.
+- 🗂 **Collections** - every pool in a filterable grid (open / trending / new · top-APR / TVL / 24h fees).
+- 📈 **Trending** - ranked table with APR, TVL, 24h, 7-day fees and sparklines.
+- ⚡ **Activity** - full stakes / router / claims feed.
+- 🚀 **Launch** - turn any pair into a live pool in minutes.
+- 💧 **Real yield** - rewards are a share of actual swap fees in WETH, not emissions.
 
 ## Monorepo structure
 
